@@ -1,0 +1,2 @@
+# BDSP Python Bot
+README WIP

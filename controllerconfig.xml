@@ -1,0 +1,39 @@
+<!-- Language: xml -->
+<!-- Contains mappings from a keyboard to Switch Pro Controller -->
+<Controllers>
+    <Profile name = "Example Switch Pro Controller">
+        <Key_A>A</Key_A>
+        <Key_B>B</Key_B>
+        <Key_X>X</Key_X>
+        <Key_Y>Y</Key_Y>
+        <Key_LB>LB</Key_LB>
+        <Key_RB>RB</Key_RB>
+        <Key_LT>LT</Key_LT>
+        <Key_RT>RT</Key_RT>
+        <Key_Back>Back</Key_Back>
+        <Key_Start>Start</Key_Start>
+        <Key_Home>Home</Key_Home>
+        <Key_Dpad_Up>Dpad_Up</Key_Dpad_Up>
+        <Key_Dpad_Down>Dpad_Down</Key_Dpad_Down>
+        <Key_Dpad_Left>Dpad_Left</Key_Dpad_Left>
+        <Key_Dpad_Right>Dpad_Right</Key_Dpad_Right>
+    </Profile>
+
+    <Profile name = "BDSP">
+        <Key_A>A</Key_A>
+        <Key_B>B</Key_B>
+        <Key_X>X</Key_X>
+        <Key_Y>Y</Key_Y>
+        <Key_LB>Q</Key_LB>
+        <Key_RB>E</Key_RB>
+        <Key_LT>1</Key_LT>
+        <Key_RT>3</Key_RT>
+        <Key_Back>-</Key_Back>
+        <Key_Start>=</Key_Start>
+        <Key_Home>`</Key_Home>
+        <Key_Dpad_Up>up</Key_Dpad_Up>
+        <Key_Dpad_Down>down</Key_Dpad_Down>
+        <Key_Dpad_Left>left</Key_Dpad_Left>
+        <Key_Dpad_Right>right</Key_Dpad_Right>
+    </Profile>
+</Controllers>
