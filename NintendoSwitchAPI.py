@@ -46,7 +46,7 @@ class NintendoSwitchAPI:
         print(handles)
         # Assigns the one at index nth
         self._handle = handles[nth]
-        # Moves the window to 0,0 and sets it to topmost and focus and 1080p resolution
+        # Moves the window to 0,0 and sets it to topmost and focus and 720p resolution
         win32gui.MoveWindow(self._handle, 60, 0, 1280, 720, True)
         #allow window to be set to foreground
 
@@ -103,7 +103,10 @@ class NintendoSwitchAPI:
             large_image = cv2.cvtColor(numpy.array(largeImg), cv2.COLOR_RGB2BGR)
         
         w, h = small_image.shape[:-1]
-
+        if debug == True:
+            cv2.imshow("small", small_image)
+            cv2.imshow("large", large_image)
+            cv2.waitKey(0)
         result = cv2.matchTemplate(small_image, large_image, method)
 
         # We want the minimum squared difference
@@ -205,7 +208,7 @@ class NintendoSwitchAPI:
         """ 
         Holds a key for a specific amount of time, usefull for moving with the W A S D keys 
         """
-        self.set_active()
+        # self.set_active()
         start = time.time()
         pydirectinput.keyDown(key)
         """
