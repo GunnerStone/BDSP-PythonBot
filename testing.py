@@ -17,6 +17,26 @@ from detect_shiny_particles import get_contour_count
 leeway = 3
 
 
+def get_enemy_pokemon_name():
+    # takes a screenshot of the game
+    img = driver.screenshotRAM()
+
+    # convert to opencv
+    img = np.array(img)
+    img = cv2.resize(img, (1280, 720))
+
+    img = img[100:130,900:1068] # pokemon name box
+
+    # filter out all pixels that arent very close to black
+    img = cv2.inRange(img, (0,0,0), (100,100,100))
+
+    # flip the black and white
+    img = cv2.bitwise_not(img)
+
+    # read using tesseract
+    text = pytesseract.image_to_string(img)
+
+    return text
 
 def has_pokewatch_btn_screen():
     # takes a screenshot of the game
@@ -108,10 +128,10 @@ def get_in_battle():
     """ Use sweet scent to start battle """
     driver.hold_key(controller['Key_X'].lower(),0.2).wait(0.4)
     driver.hold_key(controller['Key_A'].lower(),0.2).wait(0.8)
-    driver.hold_key(controller['Key_Dpad_Up'].lower(),0.2).wait(0.2)
+    driver.hold_key(controller['Key_Dpad_Up'].lower(),0.2)
     driver.hold_key(controller['Key_A'].lower(),0.2).wait(0.1)
-    driver.hold_key(controller['Key_Dpad_Down'].lower(),0.2)
-    driver.hold_key(controller['Key_A'].lower(),0.2)
+    driver.hold_key(controller['Key_Dpad_Down'].lower(),0.1)
+    driver.hold_key(controller['Key_A'].lower(),0.1)
 
 
     print("Looking for white-screen trigger")
@@ -145,18 +165,37 @@ def get_in_battle():
     my_logfile.write(time_diff + "\n")
     my_logfile.close()
 
-    if time_check_2 - time_check > 2.5:
+    if time_check_2 - time_check > 3.1:
         # quit the program
         quit()
+    
+    print("Did NOT detect shiny")
 
     # wait for run button to appear
     while not has_run_btn():
         time.sleep(0.5)
     
     print("Run button found")
-    # if not shiny, then flee
-    # driver.hold_key(controller['Key_Dpad_Up'],0.2)
+    
+    
+    """ Check to see if its a desirable pokemon """
+    desired_pokemon = ["ABRA"]
 
+    IS_CATCHING = False
+    
+    # check if the pokemon is in the desired list
+    curr_pokemon = str(get_enemy_pokemon_name()).upper().strip()
+    print("Current Pokemon: " + curr_pokemon)
+
+    if curr_pokemon in desired_pokemon:
+        print("Found " + curr_pokemon + " in battle")
+        IS_CATCHING = True
+    
+    if IS_CATCHING:
+        driver.hold_key(controller['Key_X'].lower(),0.2).wait(0.5)
+        driver.hold_key(controller['Key_A'].lower(),0.2).wait(0.5)
+    """ Flee from battle """
+    driver.hold_key(controller['Key_Dpad_Up'],0.2).wait(0.2)
     """ Press A until battle is over """
     while not has_black_screen():
         driver.hold_key(controller['Key_A'].lower(),0.2)
@@ -169,6 +208,63 @@ def get_in_battle():
     print("Battle is Over...")
     # battle is over
     while not has_pokewatch_btn_screen():
+        time.sleep(0.5)
+
+    return
+
+def dialga_shiny_hunt():
+    # looks for battle trigger
+    print("Walking into battle")
+    driver.hold_key(controller['Key_Dpad_Up'],0.2).wait(0.2)
+
+    # press A until the white screen appears
+    while not has_white_screen():
+        driver.hold_key(controller['Key_A'].lower(),0.2)
+        time.sleep(0.1)
+
+    while has_white_screen():
+        time.sleep(0.1)
+
+    # TBD - timer for shiny animation
+    print("Looking for shiny animation")
+
+    # check if shiny
+    while not has_battletext_screen():
+        time.sleep(0.1)
+    print("Grabbed checkpoint time A")
+    time_check = time.time()
+
+    while has_battletext_screen():
+        time.sleep(0.1)
+
+    # if it's shiny, wait for the battle text screen to appear much later than usual
+    while not has_battletext_screen():
+        time.sleep(0.1)
+    print("Grabbed checkpoint time B")
+    time_check_2 = time.time()
+
+    # print the time difference in seconds
+    print("Time difference: " + str(time_check_2 - time_check))
+    time_diff = str(time_check_2 - time_check)
+    my_logfile = open("logfile.txt", "a")
+    my_logfile.write(time_diff + "\n")
+    my_logfile.close()
+
+    if time_check_2 - time_check > 2.1:
+        # quit the program
+        quit()
+    
+    print("Did NOT detect shiny")
+
+    print("Resetting game")
+    """ Reset the game """
+    driver.hold_key(controller['Key_Home'],0.2).wait(0.7)
+    driver.hold_key(controller['Key_X'].lower(),0.2).wait(0.5)
+    
+    # press A until pokewatch btn appears
+    while not has_pokewatch_btn_screen():
+        driver.hold_key(controller['Key_A'].lower(),0.2)
+        driver.hold_key(controller['Key_RB'].lower(),0.2)
         time.sleep(0.5)
 
     return
@@ -212,8 +308,10 @@ try:
         while True:
             # controller_test()
             # num_contours = get_pokemon_contour_count()
-            # print("Number of Enemy Pokemon Contours: {}".format(num_contours))
-            print(get_in_battle())
+            # print(get_enemy_pokemon_name())
+            # print("Numbera of Enemy Pokemon Contours: {}".format(num_contours))
+            # get_in_battle()
+            dialga_shiny_hunt()
             # hehe_screenshot = driver.screenshotRAM()
     except KeyboardInterrupt:
             print ('Interrupted')

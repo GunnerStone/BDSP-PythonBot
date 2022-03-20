@@ -25,7 +25,8 @@ def get_contour_count(img):
     m1 = cv2.resize(img, (1280, 720))
 
     # crop image to only show the enemy pokemon
-    m2 = m1[610:660,965:1068] # run_btn screen
+    m2 = m1[100:130,900:1068] # pokemon name box
+    # m2 = m1[610:660,965:1068] # run_btn screen
     # m2 = m1[640:660,705:1068] # battle_text screen
     # m2 = m1[70:250,1140:1180] #pokewatch screen
     cv2.imwrite("m2.png", m2)
