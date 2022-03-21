@@ -269,6 +269,61 @@ def dialga_shiny_hunt():
 
     return
 
+def legendary_shiny_hunt():
+    # looks for battle trigger
+    print("Walking into battle")
+    
+    # press A until the white screen appears
+    while not has_white_screen():
+        driver.hold_key(controller['Key_A'].lower(),0.2)
+        time.sleep(0.1)
+
+    while has_white_screen():
+        time.sleep(0.1)
+
+    # TBD - timer for shiny animation
+    print("Looking for shiny animation")
+
+    # check if shiny
+    while not has_battletext_screen():
+        time.sleep(0.1)
+    print("Grabbed checkpoint time A")
+    time_check = time.time()
+
+    while has_battletext_screen():
+        time.sleep(0.1)
+
+    # if it's shiny, wait for the battle text screen to appear much later than usual
+    while not has_battletext_screen():
+        time.sleep(0.1)
+    print("Grabbed checkpoint time B")
+    time_check_2 = time.time()
+
+    # print the time difference in seconds
+    print("Time difference: " + str(time_check_2 - time_check))
+    time_diff = str(time_check_2 - time_check)
+    my_logfile = open("logfile.txt", "a")
+    my_logfile.write(time_diff + "\n")
+    my_logfile.close()
+
+    if time_check_2 - time_check > 2.1:
+        # quit the program
+        quit()
+    
+    print("Did NOT detect shiny")
+
+    print("Resetting game")
+    """ Reset the game """
+    driver.hold_key(controller['Key_Home'],0.2).wait(0.7)
+    driver.hold_key(controller['Key_X'].lower(),0.2).wait(0.5)
+    
+    # press A until pokewatch btn appears
+    while not has_pokewatch_btn_screen():
+        driver.hold_key(controller['Key_A'].lower(),0.2)
+        driver.hold_key(controller['Key_RB'].lower(),0.2)
+        time.sleep(0.5)
+
+    return
 
 
 try:
