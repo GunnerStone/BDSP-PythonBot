@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+import os
 def has_battletext_screen(driver):
     # takes a screenshot of the game
     img = driver.screenshot_RAM()
@@ -11,7 +11,7 @@ def has_battletext_screen(driver):
 
     img = img[640:660,705:1068] # battle_text screen
 
-    if driver.match_image(img, "./assets/battle_text.png", threshold=0.1):
+    if driver.match_image(img, "BDSP-Scripts/assets/battle_text.png", threshold=0.1):
         return True
     else:
         return False

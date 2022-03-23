@@ -27,13 +27,18 @@ try:
     del controller["@name"]
     
     try:
+        # count the number of encounters
+        encounters = 0
         while True:
             """ Run the script that is defined in the Config_Files/global_config.py file """
             # load a module dynamically from the scripts folder
             # and launch the 'run' function from that module
             # from https://stackoverflow.com/questions/17142090/how-to-get-reference-to-module-by-string-name-and-call-its-method-by-string-name
+            print("On Encounter {}".format(encounters))
             getattr(globals()[gc.running_script_name],'run')(driver,controller)
-
+            encounters += 1
+            # clear the console 
+            driver.clear_console()
     except KeyboardInterrupt:
             print ('Interrupted')
             try:

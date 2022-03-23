@@ -10,7 +10,7 @@ def has_run_btn(driver):
 
     img = img[610:660,965:1068]
 
-    if driver.match_image(img, "./assets/run_btn.png", threshold=0.1):
+    if driver.match_image(img, "BDSP-Scripts/assets/run_btn.png", threshold=0.1):
         return True
     else:
         return False

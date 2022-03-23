@@ -11,7 +11,7 @@ def has_pokewatch_btn_screen(driver):
 
     img = img[70:250,1140:1180] # pokewatch screen
 
-    if driver.match_image(img, "./assets/pokewatch_btn.png", threshold=0.1):
+    if driver.match_image(img, "BDSP-Scripts/assets/pokewatch_btn.png", threshold=0.1):
         return True
     else:
         return False

@@ -8,10 +8,10 @@
 # DEBUG = 10
 # NOTSET = 0
 import logging
-Logging_Level = logging.INFO
+Logging_Level = logging.DEBUG
 
 # leeway: how long the user has to enable capture mode on the MaxAim Di controller
-leeway = 1.0
+leeway = 3.0
 
 capture_utility_name = "4K Capture Utility"
 running_script_name = "stationary_legendary_hunt"

@@ -22,7 +22,8 @@ def run(driver, controller):
     # looks for battle trigger
     logging.basicConfig(stream=sys.stderr, level=gc.Logging_Level)
     logging.debug("Walking into battle")
-    
+    driver.hold_key(controller['Key_Dpad_Up'],0.2).wait(0.2)
+
     # press A until the white screen appears
     while not utils.has_white_screen(driver):
         driver.hold_key(controller['Key_A'].lower(),0.2)
