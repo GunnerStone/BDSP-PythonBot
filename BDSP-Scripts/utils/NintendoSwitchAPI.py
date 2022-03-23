@@ -1,15 +1,10 @@
 import win32gui
-import win32con
 import pyautogui
 import cv2
 import time
 import numpy
-import ctypes
 import pydirectinput
 import pytesseract
-import random
-import pygetwindow
-import re
 # import only system from os 
 from os import system, name 
 
@@ -19,7 +14,9 @@ class NintendoSwitchAPI:
         self._handle = handle
 
     def wait(self, s):
-        """ Alias for time.sleep() that return self for function chaining """
+        """ 
+        - Alias for time.sleep() that return self for function chaining
+        """
         time.sleep(s)
         return self
     
@@ -33,7 +30,10 @@ class NintendoSwitchAPI:
             _ = system('clear') 
     
     def register_window(self, name="", nth=0):
-        """ Assigns the instance to a running 4k Capture Utility window (Required before using any other API functions) """
+        """ 
+        - Assigns the instance to a running 4k Capture Utility window 
+        - (Required before using any other API functions) 
+        """
         def win_enum_callback(handle, param):
             window_name = str(str(win32gui.GetWindowText(handle)))
             if(window_name == name):
@@ -48,19 +48,22 @@ class NintendoSwitchAPI:
         self._handle = handles[nth]
         # Moves the window to 0,0 and sets it to topmost and focus and 720p resolution
         win32gui.MoveWindow(self._handle, 60, 0, 1280, 720, True)
-        #allow window to be set to foreground
-
-        # win32gui.SetForegroundWindow(self._handle)
         win32gui.SetActiveWindow(self._handle)
-        rect = win32gui.GetWindowRect(self._handle)
         return self
 
     def read_text_from_img(self, img):
-        #convert pyautogui/PIL to opencv format (numpy array)
-        img = numpy.array(img,dtype=numpy.uint8) 
+        """ 
+        - Assumes the text is white
+        - Make sure image preprocessing is done before using this function 
+        """
+        # if image isnt a numpy array, convert it
+        if(type(img) is not numpy.ndarray):
+            #convert pyautogui/PIL to opencv format (numpy array)
+            img = numpy.array(img,dtype=numpy.uint8) 
 
         #make image black/white
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY ) 
+
         #threshold to isolate black/white color & invert it so text is black
         _,img = cv2.threshold(img,190,255,cv2.THRESH_BINARY_INV)
 
@@ -69,11 +72,15 @@ class NintendoSwitchAPI:
 
 
     def is_active(self):
-        """ Returns true if the window is focused """
+        """ 
+        - Returns true if the window is focused 
+        """
         return self._handle == win32gui.GetForegroundWindow()
 
     def set_active(self):
-        """ Sets the window to active if it isn't already """
+        """ 
+        - Sets the window to active if it isn't already
+        """
         if not self.is_active():
             """ Press alt before and after to prevent a nasty bug """
             pyautogui.press('alt')
@@ -82,14 +89,18 @@ class NintendoSwitchAPI:
         return self
 
     def get_window_rect(self):
-        """Get the bounding rectangle of the window """
+        """
+        - Get the bounding rectangle of the window
+        """
         rect = win32gui.GetWindowRect(self._handle)
         return [rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]]
 
     def match_image(self, largeImg, smallImg, threshold=0.1, debug=False):
-        """ Finds smallImg in largeImg using template matching """
-        """ Adjust threshold for the precision of the match (between 0 and 1, the lowest being more precise """
-        """ Returns false if no match was found with the given threshold """
+        """ 
+        - Finds smallImg in largeImg using template matching 
+        - Adjust threshold for the precision of the match (between 0 and 1, the lowest being more precise
+        - Returns false if no match was found with the given threshold
+        """
         method = cv2.TM_SQDIFF_NORMED
 
         # Read the images from the file
@@ -137,20 +148,26 @@ class NintendoSwitchAPI:
         return (x + (w * 0.5), y + (h * 0.5))
 
     def pixel_matches_color(self, coords, rgb, threshold=0):
-        """ Matches the color of a pixel relative to the window's position """
+        """ 
+        - Matches the color of a pixel relative to the window's position
+        """
         wx, wy = self.get_window_rect()[:2]
         x, y = coords
         # self.move_mouse(x, y)
         return pyautogui.pixelMatchesColor(x + wx, y + wy, rgb, tolerance=threshold)
 
     def move_mouse(self, x, y, speed=.5):
-        """ Moves to mouse to the position (x, y) relative to the window's position """
+        """ 
+        - Moves to mouse to the position (x, y) relative to the window's position
+        """
         wx, wy = self.get_window_rect()[:2]
         pydirectinput.moveTo(wx + x, wy + y, speed)
         return self
 
     def click(self, x, y, delay=.1, speed=.5, button='left'):
-        """ Moves the mouse to (x, y) relative to the window and presses the mouse button """
+        """ 
+        - Moves the mouse to (x, y) relative to the window and presses the mouse button
+        """
         (self.set_active()
          .move_mouse(x, y, speed=speed)
          .wait(delay))
@@ -160,7 +177,7 @@ class NintendoSwitchAPI:
 
     def screenshot(self, name, region=False):
         """ 
-        - Captures a screenshot of the window and saves it to 'name' 
+        - Captures a screenshot of the window and saves it to 'name' in local directory
         - Can also be used the capture specific parts of the window by passing in the region arg. (x, y, width, height) (Relative to the window position) 
 
         """
@@ -180,9 +197,9 @@ class NintendoSwitchAPI:
 
         pyautogui.screenshot(name, region=region)
     
-    def screenshotRAM(self, region=False):
+    def screenshot_RAM(self, region=False):
         """ 
-        - Captures a screenshot of the window and saves it to 'name' 
+        - Captures a screenshot of the window and returns it as a pyautogui.screenshot object
         - Can also be used the capture specific parts of the window by passing in the region arg. (x, y, width, height) (Relative to the window position) 
 
         """
@@ -206,15 +223,9 @@ class NintendoSwitchAPI:
 
     def hold_key(self, key, holdtime=0.0):
         """ 
-        Holds a key for a specific amount of time, usefull for moving with the W A S D keys 
+        - Holds a key for a specific amount of time, usefull for moving with the W A S D keys 
         """
-        # self.set_active()
-        start = time.time()
         pydirectinput.keyDown(key)
-        """
-        while time.time() - start < holdtime:
-            pass
-        """
         time.sleep(holdtime)
         pydirectinput.keyUp(key)
 

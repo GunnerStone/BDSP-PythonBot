@@ -1,6 +1,13 @@
 __pycache__
+*.pyc
+
 GTunerPro/*
+
+BDSP-Scripts/Config_Files/twilioConfig.py
+
 4k Capture Utility.lnk
+
+logfile.txt
+
 .vscode
 .vscode/settings.json
-config.py
