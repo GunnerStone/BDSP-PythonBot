@@ -33,9 +33,6 @@ def cm_etree_to_dict(t):
 
 """ Function reads in an xml file containing controller information and returns a python dictionary of key mappings """
 def getController(xml_file = "BDSP-Scripts/Config_Files/controllerconfig.xml", profile_name = gc.controller_config_profile_name):
-    # print current working directory
-    print(os.getcwd())
-    
     tree = ElementTree.parse(xml_file)
     root = tree.getroot()
     for profile in root.findall('Profile'):

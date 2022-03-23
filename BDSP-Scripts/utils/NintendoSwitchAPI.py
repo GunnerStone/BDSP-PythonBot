@@ -35,15 +35,15 @@ class NintendoSwitchAPI:
         - (Required before using any other API functions) 
         """
         def win_enum_callback(handle, param):
+            global output_string
             window_name = str(str(win32gui.GetWindowText(handle)))
             if(window_name == name):
-                print(window_name)
                 param.append(handle)
 
         handles = []
         win32gui.EnumWindows(win_enum_callback, handles)
         handles.sort()
-        print(handles)
+        print("Found window: {} at PID: {}".format(name,str(handles[0])))
         # Assigns the one at index nth
         self._handle = handles[nth]
         # Moves the window to 0,0 and sets it to topmost and focus and 720p resolution

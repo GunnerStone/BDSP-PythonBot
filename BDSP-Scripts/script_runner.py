@@ -17,14 +17,17 @@ try:
     driver = utils.NintendoSwitchAPI().register_window(name=gc.capture_utility_name, nth=0)
     wx, wy = driver.get_window_rect()[:2]
 
-    print("{} found successfully!".format(gc.capture_utility_name))
+    print()
+
+    controller = utils.getController()
+    print("Controller Config: {} found successfully!".format(controller["@name"]))
+    del controller["@name"]
+    
 
     print ("You have {} seconds to Enable Capture Mode on the MaxAim Di controller".format(gc.leeway))
     time.sleep(gc.leeway)
     
-    controller = utils.getController()
-    print("Controller Config: {} found successfully!".format(controller["@name"]))
-    del controller["@name"]
+    driver.clear_console()
     
     try:
         # count the number of encounters

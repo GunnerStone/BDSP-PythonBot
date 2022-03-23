@@ -53,10 +53,6 @@ def run(driver, controller):
 
     # logging.debug the time difference in seconds
     logging.debug("Time difference: " + str(time_check_2 - time_check))
-    time_diff = str(time_check_2 - time_check)
-    my_logfile = open("logfile.txt", "a")
-    my_logfile.write(time_diff + "\n")
-    my_logfile.close()
 
     if time_check_2 - time_check > 2.1:
         # quit the program
