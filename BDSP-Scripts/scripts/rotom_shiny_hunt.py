@@ -24,19 +24,30 @@ def run(driver, controller):
     logging.debug("Walking into battle")
     driver.hold_key(controller['Key_Dpad_Up'],0.2).wait(0.2)
 
-    # press A until the white screen appears
-    while not utils.has_white_screen(driver):
-        driver.hold_key(controller['Key_A'].lower(),0.2)
-        time.sleep(0.1)
+    # accouunt for the tv flash
+    in_battle = False
+    while not in_battle:
+        # press A until the white screen appears for more than .3 seconds
+        while not utils.has_white_screen(driver):
+            driver.hold_key(controller['Key_A'].lower(),0.2)
+            time.sleep(0.1)
 
-    while utils.has_white_screen(driver):
-        time.sleep(0.1)
+        white_screen_duration = 0.0
+        while utils.has_white_screen(driver):
+            time.sleep(0.1)
+            white_screen_duration += 0.1
+
+        if white_screen_duration > 0.3:
+            logging.debug("Caught the white screen")
+            in_battle = True
+        else:
+            logging.debug("Caught the TV Flash")
 
     # TBD - timer for shiny animation
     logging.debug("Looking for shiny animation")
 
     # check if shiny
-    while not utils.has_battletext_screen(driver):
+    while not utils.has_battletext_screen(driver, threshold=0.05):
         time.sleep(0.1)
     logging.debug("Grabbed checkpoint time A")
     time_check = time.time()

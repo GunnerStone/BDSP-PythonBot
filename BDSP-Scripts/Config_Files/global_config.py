@@ -17,7 +17,7 @@ capture_utility_name = "4K Capture Utility"
 running_script_name = "stationary_legendary_hunt"
 
 # timing threshold for a shiny animation
-shiny_timing_threshold = 3.3
+shiny_timing_threshold = 3.1
 
 controller_config_profile_name = "BDSP"
 

@@ -57,12 +57,15 @@ def run(driver, controller):
 
     if time_check_2 - time_check > 3.1:
         # quit the program
+        time.sleep(10)
+        curr_pokemon = str(utils.get_enemy_pokemon_name(driver)).upper().strip()
+        utils.found_shiny_text(curr_pokemon)
         quit()
     
     logging.debug("Did NOT detect shiny")
 
     # wait for run button to appear
-    while not utils.has_run_btn():
+    while not utils.has_run_btn(driver):
         time.sleep(0.5)
     
     logging.debug("Run button found")
