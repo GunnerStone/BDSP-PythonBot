@@ -46,9 +46,14 @@ Install the conda environment by running `conda_env_installer/installer.bat`
 OR, for a manual installation, create the conda environment from `conda_env_installer/environment.yml`
 ___
 ## Hardware Setup
-![Hardware Diagram](Readme_Assets/architecture_diagram.png)
 
-Set up your configuration like the diagram above.
+<p align="center">
+  <img src="Readme_Assets/architecture_diagram.png">
+</p>
+
+<p align="center">
+  Set up your configuration like the diagram above.
+</p>
 
 ___
 ## Running your first bot
