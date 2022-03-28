@@ -59,8 +59,8 @@ ___
 ## Running your first bot
 >Note: For first time setup, follow instructions in italics
 
- 0. *Open up `Config_Files/global_config.py` and change the `capture_utility_name` to the one you are using*
- *Open up `Config_Files/global_config.py` and change the `running_script_name` to the one you want to run*
+ 0. *Open up `BDSP-Scripts/Config_Files/global_config.py` and change the `capture_utility_name` to the one you are using*
+ *Open up `BDSP-Scripts/Config_Files/global_config.py` and change the `running_script_name` to the one you want to run*
  *Open up GTunerPro and install the MaxAimDI plugin*
  *Open the MaxAimDI plugin & select the controller profile located in `MaxAimDi_Layouts/Nintendo Switch.glf`*
  
