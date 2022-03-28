@@ -47,6 +47,7 @@ OR, for a manual installation, create the conda environment from `conda_env_inst
 ___
 ## Hardware Setup
 ![Hardware Diagram](Readme_Assets/architecture_diagram.png)
+
 Set up your configuration like the diagram above.
 
 ___
