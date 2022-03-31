@@ -14,7 +14,7 @@ Logging_Level = logging.DEBUG
 leeway = 3.0
 
 capture_utility_name = "4K Capture Utility"
-running_script_name = "stationary_legendary_hunt"
+running_script_name = "vs_seeker_money_farmer"
 
 # timing threshold for a shiny animation
 shiny_timing_threshold = 3.1
@@ -23,4 +23,4 @@ controller_config_profile_name = "BDSP"
 
 # list of target pokemon to hunt for
 # used to catch pokemon that are not shiny in scripts/sweet_scent_hunt.py
-target_pokemon = ['ABRA']
+target_pokemon = ['PACHIRISU']

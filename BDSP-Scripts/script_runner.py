@@ -33,7 +33,7 @@ try:
         # count the number of encounters
         encounters = 0
         while True:
-            """ Run the script that is defined in the Config_Files/global_config.py file """
+            """ Run the script that is defined in the Config_Fibles/global_config.py file """
             # load a module dynamically from the scripts folder
             # and launch the 'run' function from that module
             # from https://stackoverflow.com/questions/17142090/how-to-get-reference-to-module-by-string-name-and-call-its-method-by-string-name
