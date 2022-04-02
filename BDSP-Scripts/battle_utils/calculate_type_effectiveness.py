@@ -232,7 +232,7 @@ def get_multipliers(*params):
 Returns multipliers for specified pokemon pairings until an empty line is read
 Alternatively, it can also print out the type(s) of moves and pokemon
 """
-def calculate_type_effectiveness(attacking_move, defending_pokemon_name):
+def calculate_move_effectiveness(attacking_move, defending_pokemon_name):
     """
     Calculates the type effectiveness of a move against a pokemon
     """

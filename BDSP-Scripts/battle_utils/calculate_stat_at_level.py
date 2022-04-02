@@ -1,17 +1,12 @@
 import pokebase as pb
 import math
 """ Calculates the stat for a given pokemon at level X for a given Pokemon. """
-def calculate_stat_at_level(pokemon_name, stat_name, level=50,EV=0,IV=0,nature="neutral"):
-    pokemon_name = pokemon_name.lower()
-    # replace any spaces with dashes '-'
-    pokemon_name = pokemon_name.replace(' ', '-')
-    pokemon = pb.pokemon(pokemon_name)
-    stats = pokemon.stats
+def calculate_stat_at_level(pokemon_obj, stat_name, level=50,EV=0,IV=0,nature="neutral"):
+    stats = pokemon_obj.stats
     # loop through each stat and find the desired stat and pull the base values
     for stat in stats:
         if stat.stat.name == stat_name:
             base_stat = stat.base_stat
-    print(base_stat)
     # calculate the stat
     # HP = floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + Level + 10.
     # Other Stats = (floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + 5) x Nature.
